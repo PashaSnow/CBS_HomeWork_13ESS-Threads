@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29709.97
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdditionTask", "AdditionTask\AdditionTask.csproj", "{CD3298A6-AC8F-47AB-A00A-A23CBC2DCB7E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Task1", "Task1\Task1.csproj", "{93E5734F-BF66-4EC7-B321-266518995BEB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JagetTest", "JagetTest\JagetTest.csproj", "{EF77A211-4651-4A8F-BCFB-8BC1AF942003}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CD3298A6-AC8F-47AB-A00A-A23CBC2DCB7E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CD3298A6-AC8F-47AB-A00A-A23CBC2DCB7E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CD3298A6-AC8F-47AB-A00A-A23CBC2DCB7E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CD3298A6-AC8F-47AB-A00A-A23CBC2DCB7E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{93E5734F-BF66-4EC7-B321-266518995BEB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{93E5734F-BF66-4EC7-B321-266518995BEB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{93E5734F-BF66-4EC7-B321-266518995BEB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{93E5734F-BF66-4EC7-B321-266518995BEB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EF77A211-4651-4A8F-BCFB-8BC1AF942003}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EF77A211-4651-4A8F-BCFB-8BC1AF942003}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EF77A211-4651-4A8F-BCFB-8BC1AF942003}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EF77A211-4651-4A8F-BCFB-8BC1AF942003}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E634E5FD-228D-490E-80E6-DBB9C7F8EC50}
+	EndGlobalSection
+EndGlobal
