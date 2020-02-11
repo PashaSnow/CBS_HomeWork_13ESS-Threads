@@ -67,8 +67,7 @@ namespace Task1
         char[][] symbolStream = new char[1][]; // масив который хранит все массивы в потоке. Это массивы символов и массив пустых значений один за одным
         string symbols = "123456789aAbBcCdDeEfFgGhiIjJkKlLmMnN";
 
-        [ThreadStatic]
-        MatrixInfo choseArray;
+        static MatrixInfo choseArray;
         Color color = Color.White;
 
 
@@ -88,7 +87,7 @@ namespace Task1
 
         public void WriteColomn(object height)
         {
-            Thread.Sleep(new Random(Guid.NewGuid().GetHashCode()).Next(100, 1500));
+            Thread.Sleep(new Random(Guid.NewGuid().GetHashCode()).Next(100, 1000));
             FillConsole mode = FillConsole.Start;
             consoleHeight = (int)height;   // высота консоли
             int factLength = 1; // фактическая выведеная в консоль длина массива
@@ -173,7 +172,7 @@ namespace Task1
                         else
                             setter = 0;
                     }
-                    Thread.Sleep(new Random(Guid.NewGuid().GetHashCode()).Next(15, 70));
+                    //Thread.Sleep(new Random(Guid.NewGuid().GetHashCode()).Next(15, 50));
                 }
             }
         }
