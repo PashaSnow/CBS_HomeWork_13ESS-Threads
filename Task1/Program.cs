@@ -12,9 +12,13 @@ namespace Task1
         {
             int height = 30, width = 80;
             Console.SetWindowSize(width, height);
-            var writer = new ColomnWriter();
-            ParameterizedThreadStart parameterizedThread = new ParameterizedThreadStart(writer.WriteColomn);
-            new Thread(parameterizedThread).Start(height);
+
+            for (int i = 0; i < width-1 ; i++)
+            {
+                var writer = new ColomnWriter();
+                ParameterizedThreadStart parameterizedThread = new ParameterizedThreadStart(writer.WriteColomn);
+                new Thread(parameterizedThread).Start(height);
+            }
         }
     }
 
@@ -50,8 +54,9 @@ namespace Task1
     class ColomnWriter
     {
         //Позиционирование
-        static int xPosition = -1; // hack: не забувай
+        static int xPosition = 0; // hack: не забувай
         int consoleHeight;
+        int nonStaticPosition = 0;
 
         // разделяет потоки
         static object thredFlag = new object();
@@ -64,13 +69,12 @@ namespace Task1
 
         [ThreadStatic]
         MatrixInfo choseArray;
-
         Color color = Color.White;
+
 
         public ColomnWriter()
         {
-            xPosition++;                   // новая колонка 
-            Console.CursorVisible = false; // скрытный курсор
+            nonStaticPosition = xPosition++;                   // новая колонка 
             choseArray = MatrixInfo.charArray;
             // сперва символьный массив
             symbolStream = new char[2][]; // первый массив чисел, второв пустой массив (что бы сохранить растаяние) // todo: исправить за не надобностю длину массива
@@ -84,18 +88,20 @@ namespace Task1
 
         public void WriteColomn(object height)
         {
+            Thread.Sleep(new Random(Guid.NewGuid().GetHashCode()).Next(100, 1500));
             FillConsole mode = FillConsole.Start;
             consoleHeight = (int)height;   // высота консоли
             int factLength = 1; // фактическая выведеная в консоль длина массива
             int realyLengt = SumLength(symbolStream); // вся длина массива
             int setter = 0;
             int stepIndex = 0; // индекc каждого прохода (этот параметер преследует setter)
-            int firstLength = symbolStream[0][0]; // для режима нормал
+            int firstLength = symbolStream[0][0]; // для режима нормал, переопределить в режиме mode = FillConsole.Normal
 
             // первый раз прокатит
             FillStream(consoleHeight, ref realyLengt);
             char[] steam = GetCharSteam();
             int index = 0; // индекс массмва steam в бесконечном цикле while
+            Console.CursorVisible = false; // скрытный курсор
             while (true)
             {
                 if (consoleHeight < realyLengt)
@@ -108,13 +114,12 @@ namespace Task1
                     // если массив только заполняет колонку в консоли todo: курсор всегда проходит только в низ
                     if (mode == FillConsole.Start)
                     {
-                        // 
-                        for (int prohod = 0; prohod < factLength; prohod++)
+                        for (int iterator = factLength; iterator != -1; iterator--)
                         {
                             Console.CursorTop = setter;
-                            WriteSymbol(ref steam[stepIndex]);
+                            WriteSymbol(ref steam[iterator]);
 
-                            // todo: гедо условие для индекса
+                            // todo: гедо условие для индекса stepIndex
                             if (setter < factLength)
                             {
                                 index++;
@@ -123,9 +128,13 @@ namespace Task1
                             else
                             {
                                 setter = 0;
+                            }
+                            if (index == steam.Length - 1)
+                            {
                                 index = 0;
                             }
                         }
+
                         if (factLength < consoleHeight)
                             factLength++;
 
@@ -135,9 +144,25 @@ namespace Task1
                             mode = FillConsole.Normal;
                         }
                     }
+
+                    // когда массив заполнил всю строку
                     if (mode == FillConsole.Normal)
                     {
+                        for (int iterator = factLength; iterator != -1; iterator--)
+                        {
+                            Console.CursorTop = setter;
+                            WriteSymbol(ref steam[iterator]);  // todo: тут ексепшены
 
+                            // todo: гедо условие для индекса stepIndex
+                            if (setter < factLength)
+                            {
+                                setter++;
+                            }
+                            else
+                            {
+                                setter = 0;
+                            }
+                        }
 
                         // встановить курсор
                         if (setter < consoleHeight)
@@ -148,6 +173,7 @@ namespace Task1
                         else
                             setter = 0;
                     }
+                    Thread.Sleep(new Random(Guid.NewGuid().GetHashCode()).Next(15, 70));
                 }
             }
         }
@@ -159,7 +185,7 @@ namespace Task1
         /// <param name="realyLengt">длина массивов</param>
         private void FillStream(int consoleHeight, ref int realyLengt)
         {
-            while (consoleHeight > realyLengt)
+            while (consoleHeight + 7 > realyLengt)
             {
                 AddNewArray(); // добавит массив символов
                 AddNewArray(); // на этот раз добавит массив пустых значений, что бы замкнуть повторяющюю цепочку todo: убрать (возможно будет постоянно менятся после переопредиления массива
@@ -288,15 +314,15 @@ namespace Task1
 
 
 
-            Console.CursorLeft = xPosition;
+            Console.CursorLeft = nonStaticPosition;
             Console.Write(symbol);
 
             // если это не пустой масив, то получить новое значение
             if (symbol != ' ')
             {
                 symbol = GetChar();
-                Thread.Sleep(100);
-                //Console.CursorLeft = xPosition;
+                //Thread.Sleep(10);
+                //Console.CursorLeft = nonStaticPosition;
                 //Console.Write(symbol);
                 //Thread.Sleep(70); // hack: тут Thread.Sleep
             }
@@ -307,13 +333,3 @@ namespace Task1
         }
     }
 }
-
-
-//for (int arrayNumber = 0; arrayNumber<symbolStream.Length; arrayNumber++)
-//                        {
-//                            for (int index = 0; index<symbolStream[arrayNumber].Length; index++)
-//                            {
-//                                Console.CursorLeft = xPosition;
-//                            }
-//                            Thread.Sleep(200);
-//                        }
